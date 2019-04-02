@@ -1,7 +1,11 @@
-.container {
+.app {
   max-width: 80rem;
   margin: 5rem auto;
   background-color: var(--color-grey-light-1);
   box-shadow: var(--shadow-dark);
   min-height: 50rem;
+}
+
+.container {
+  display: flex;
 }
