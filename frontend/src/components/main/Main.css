@@ -1,0 +1,5 @@
+.main {
+    background-color: var(--color-grey-light-2);
+    flex: 1;
+    height: 45rem;
+}
