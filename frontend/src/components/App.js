@@ -38,7 +38,7 @@ class App extends Component {
 
 function mapsStateToProps({ categories }) {
   return {
-    loading: categories === null
+    loading: categories === undefined
   }
 }
 

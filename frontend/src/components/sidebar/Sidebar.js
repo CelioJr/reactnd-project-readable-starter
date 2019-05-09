@@ -31,8 +31,6 @@ class Sidebar extends Component {
     const { categories } = this.props;
     const { navActive } = this.state;
 
-    console.log('navActive ', navActive);
-
     return (
       <nav className='sidebar'>
         <ul className='side-nav'>
