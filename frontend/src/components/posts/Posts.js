@@ -24,9 +24,19 @@ class Posts extends Component {
 	}
 }
 
-function mapsStateToProps({ posts }) {
+function mapsStateToProps({ posts }, {match}) {
+	const { category } = match.params
+
 	return {
-		postsIds: Object.keys(posts).sort((a,b) => posts[b].timestamp - posts[a].timestamp)
+		postsIds: 
+					Object.keys(posts)
+						.filter(key => {
+							if(category !== undefined){
+								return posts[key].category === category
+							}
+								return posts[key] 
+						})
+						.sort((a,b) => posts[b].timestamp - posts[a].timestamp)
 	}
 }
 
