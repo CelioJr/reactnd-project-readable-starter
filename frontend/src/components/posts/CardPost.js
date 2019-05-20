@@ -6,7 +6,10 @@ import LabelOutlinedIcon from '@material-ui/icons/LabelImportantOutlined';
 import AccountCicleIcon  from '@material-ui/icons/AccountCircleOutlined'
 import ThumbUpIcon  from '@material-ui/icons/ThumbUpAltOutlined'
 import ThumbDownIcon  from '@material-ui/icons/ThumbDownAltOutlined'
-import IconButton from '@material-ui/core/IconButton';
+import IconButton from '@material-ui/core/IconButton'
+import CommentIcon from '@material-ui/icons/CommentOutlined';
+
+import { incrementVoteScore, decrementVoteScore } from '../../actions/posts'
 
 const styles = {
   labelIcon: {
@@ -23,6 +26,13 @@ const styles = {
   }
 }
 class CardPost extends Component {
+
+  formatDate (timestamp) {
+		const d = new Date(timestamp)
+		const time = d.toLocaleTimeString('en-US')
+		return time.substr(0, 5) + time.slice(-2) + ' | ' + d.toLocaleDateString()
+  }
+  
   render() {
     const { post } = this.props
 
@@ -31,6 +41,9 @@ class CardPost extends Component {
         <CardContent>
           <Typography gutterBottom variant="headline" component="h6">
             {post.title}
+          </Typography>
+          <Typography variant="subtitle2" style={styles.labelIcon} component="p">
+            {this.formatDate(post.timestamp)}
           </Typography>
           <Typography variant="subtitle2" style={styles.labelIcon} component="p">
               <AccountCicleIcon/>{`author: ${post.author}`}
@@ -46,12 +59,20 @@ class CardPost extends Component {
             <Typography variant="subtitle2" style={styles.labelIcon} component="p">
               {post.voteScore}
             </Typography>
-            <IconButton>
+            <IconButton
+              onClick={() => this.props.incrementVoteScore(post.id)}>
               <ThumbUpIcon />
             </IconButton>
-            <IconButton>
+            <IconButton
+              onClick={() => this.props.decrementVoteScore(post.id)}>
               <ThumbDownIcon />
             </IconButton>
+          </div>
+          <div >
+            <Typography variant="body1" component="p" style={styles.labelIcon}>
+              <CommentIcon style={{marginRight: '2%'}} />
+              {post.commentCount}
+            </Typography>
           </div>
         </CardContent>
         <CardActions style={styles.cardAction}>
@@ -73,4 +94,11 @@ function mapStateToProps({posts},{id}){
   }
 }
 
-export default withRouter(connect(mapStateToProps)(CardPost))
+function mapDispatchToProps(dispatch) {
+  return {
+    incrementVoteScore: (id) => dispatch(incrementVoteScore(id)),
+    decrementVoteScore: (id) => dispatch(decrementVoteScore(id)),
+  }
+}
+
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(CardPost))

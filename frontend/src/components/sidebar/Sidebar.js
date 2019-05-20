@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import { NavLink } from 'react-router-dom'
+import { NavLink, withRouter } from 'react-router-dom'
 import './Sidebar.css'
 import icons from '../../resources/sprite.svg'
 
@@ -64,4 +64,4 @@ function mapsStatetoProps({categories}, props){
   }
 }
 
-export default connect(mapsStatetoProps)(Sidebar)
+export default withRouter(connect(mapsStatetoProps)(Sidebar))
