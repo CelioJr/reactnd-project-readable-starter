@@ -12,7 +12,7 @@ import {filters, setFilter} from '../../actions/shared'
 class Posts extends Component {
 
 	handleChange = (event) => {
-		this.setFilter(event.target.value)
+		this.props.setFilter(event.target.value)
 	}
 
 	render() {
@@ -67,12 +67,8 @@ function mapsStateToProps({ posts, shared }, {match}) {
 							}
 								return posts[key] 
 						})
-						.sort((a,b) => { 
-							posts[b][filter] - posts[a][filter]}
-						),
+						.sort((a,b) => posts[b][filter] - posts[a][filter]),
 		filter				
-						
-						// .sort((a,b) => posts[b].timestamp - posts[a].timestamp)
 	}
 }
 

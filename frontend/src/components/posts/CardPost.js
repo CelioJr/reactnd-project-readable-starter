@@ -39,7 +39,7 @@ class CardPost extends Component {
     return (
       <Card>
         <CardContent>
-          <Typography gutterBottom variant="headline" component="h6">
+          <Typography gutterBottom variant="headline" component="h7">
             {post.title}
           </Typography>
           <Typography variant="subtitle2" style={styles.labelIcon} component="p">
