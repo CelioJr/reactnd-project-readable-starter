@@ -3,8 +3,9 @@
     background-color: #fff;
     border-bottom: var(--color-grey-light-2);
     font-size: 1.6rem;
-    display: flex;
+    /* display: flex;
     align-items: center;
+    justify-content: space-between */
 }
 
 .logo {
