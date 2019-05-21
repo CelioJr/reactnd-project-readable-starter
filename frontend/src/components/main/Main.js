@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import './Main.css'
 import Posts from '../posts/Posts'
+import NewPost from '../posts/NewPost'
 import {Route, withRouter, Switch} from 'react-router-dom'
 
 class Main extends Component {
@@ -9,6 +10,7 @@ class Main extends Component {
     return (
       <div className='main'>
       <Switch>
+        <Route path='/new' component={NewPost} />
         <Route path='/:category' component={Posts} />
         <Route path='/' component={Posts} />
       </Switch>
