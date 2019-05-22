@@ -1,9 +1,10 @@
 const api = "http://localhost:3001"
 
-const headers = {
+export const headers = {
     'Accept': 'application/json',
-    'Authorization': 'project'
-}
+    'Authorization': 'project-udacity',
+    'Content-Type': 'application/json'
+  }
 
 export const getCategories = async () => {
     let response = await fetch(`${api}/categories`, { headers })
@@ -25,4 +26,12 @@ export const getInitialData = () => {
         ...categories,
         posts
     }))
+}
+
+export const savePost = (post) => {
+    return fetch(`${api}/posts`, {
+        method: 'POST',
+        headers: headers,
+        body: JSON.stringify(post)
+      })
 }

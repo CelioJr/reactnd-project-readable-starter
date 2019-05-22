@@ -2,6 +2,7 @@ import { showLoading, hideLoading } from "react-redux-loading"
 import * as ServiceAPI from '../services/ServiceAPI'
 
 export const RECEIVE_POSTS = 'RECEIVE_POSTS'
+export const ADD_NEW_POST = 'ADD_NEW_POST'
 export const INCREMENT_VOTE_SCORE = 'INCREMENT_VOTE_SCORE'
 export const DECREMENT_VOTE_SCORE = 'DECREMENT_VOTE_SCORE'
 
@@ -34,5 +35,18 @@ export function handleReceivePosts(){
             dispatch(receivePost(posts))
             dispatch(hideLoading())
         })
+    }
+}
+
+export function handleAddNewPost(post, callback) {
+    return (dispatch) => {
+        dispatch(showLoading());
+        return ServiceAPI.savePost(post)
+            .then(response => response.json())
+            .then(data => {
+                dispatch({type: ADD_NEW_POST, post: data})
+                dispatch(hideLoading())
+                callback()
+            })
     }
 }

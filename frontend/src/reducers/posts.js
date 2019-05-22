@@ -1,4 +1,4 @@
-import { RECEIVE_POSTS, INCREMENT_VOTE_SCORE, DECREMENT_VOTE_SCORE } from "../actions/posts";
+import { RECEIVE_POSTS, INCREMENT_VOTE_SCORE, DECREMENT_VOTE_SCORE, ADD_NEW_POST } from "../actions/posts";
 
 export default function posts(state = {}, action) {
     switch (action.type) {
@@ -8,6 +8,13 @@ export default function posts(state = {}, action) {
                 return arr
             }, {})
             return posts
+        case ADD_NEW_POST:
+            return {
+                ...state,
+                [action.post.id]: {
+                    ...action.post
+                }
+            }     
         case INCREMENT_VOTE_SCORE:
         return {
             ...state,
