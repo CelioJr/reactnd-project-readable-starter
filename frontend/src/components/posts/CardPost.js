@@ -8,8 +8,9 @@ import ThumbUpIcon  from '@material-ui/icons/ThumbUpAltOutlined'
 import ThumbDownIcon  from '@material-ui/icons/ThumbDownAltOutlined'
 import IconButton from '@material-ui/core/IconButton'
 import CommentIcon from '@material-ui/icons/CommentOutlined';
+import { handleDeletePost } from '../../actions/posts'
 
-import { incrementVoteScore, decrementVoteScore } from '../../actions/posts'
+import { incrementVoteScore, decrementVoteScore, UpDownVoteScore} from '../../actions/posts'
 
 const styles = {
   labelIcon: {
@@ -60,11 +61,11 @@ class CardPost extends Component {
               {post.voteScore}
             </Typography>
             <IconButton
-              onClick={() => this.props.incrementVoteScore(post.id)}>
+              onClick={() => this.props.UpDownVoteScore(post.id, 'upVote')}>
               <ThumbUpIcon />
             </IconButton>
             <IconButton
-              onClick={() => this.props.decrementVoteScore(post.id)}>
+              onClick={() => this.props.UpDownVoteScore(post.id, 'downVote')}>
               <ThumbDownIcon />
             </IconButton>
           </div>
@@ -79,7 +80,12 @@ class CardPost extends Component {
           <Button size='small' color='primary' target='_blank'>
             Edit
           </Button>
-          <Button size='small' color='primary' target='_blank'>
+          <Button 
+            size='small' 
+            color='primary' 
+            target='_blank'
+            onClick={() => this.props.handleDeletePost(post.id)}
+            >
            Delete
           </Button>
         </CardActions>
@@ -96,8 +102,8 @@ function mapStateToProps({posts},{id}){
 
 function mapDispatchToProps(dispatch) {
   return {
-    incrementVoteScore: (id) => dispatch(incrementVoteScore(id)),
-    decrementVoteScore: (id) => dispatch(decrementVoteScore(id)),
+    UpDownVoteScore: (postId, option) => dispatch(UpDownVoteScore(postId, option)),
+    handleDeletePost: (postId) => dispatch(handleDeletePost(postId))
   }
 }
 

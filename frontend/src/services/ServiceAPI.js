@@ -35,3 +35,18 @@ export const savePost = (post) => {
         body: JSON.stringify(post)
       })
 }
+
+export const deletePost = (postId) => {
+    return fetch(`${api}/posts/${postId}`, {
+      method: 'DELETE',
+      headers: headers
+    }).then(res => res.json())
+  }
+
+  export const votePost = (postId, option) => {
+    return fetch(`${api}/posts/${postId}`, {
+      method: 'POST',
+      headers: headers,
+      body: JSON.stringify({ option })
+    }).then(res => res.json())
+  }

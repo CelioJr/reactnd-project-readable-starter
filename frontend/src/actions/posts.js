@@ -3,32 +3,28 @@ import * as ServiceAPI from '../services/ServiceAPI'
 
 export const RECEIVE_POSTS = 'RECEIVE_POSTS'
 export const ADD_NEW_POST = 'ADD_NEW_POST'
-export const INCREMENT_VOTE_SCORE = 'INCREMENT_VOTE_SCORE'
-export const DECREMENT_VOTE_SCORE = 'DECREMENT_VOTE_SCORE'
+export const DELETE_POST = 'DELETE_POST'
+export const UP_DOWN_VOTE_SCORE = 'UP_DOWN_VOTE_SCORE'
 
-
-export function receivePost (posts) {
+export function receivePost(posts) {
     return {
         type: RECEIVE_POSTS,
         posts,
     }
 }
 
-export function incrementVoteScore(postId) {
-    return {
-        type: INCREMENT_VOTE_SCORE,
-        postId
+export function UpDownVoteScore(postId, option) {
+    return (dispatch) => {
+        dispatch(showLoading());
+        return ServiceAPI.votePost(postId,option)
+            .then((post) => {
+                dispatch({type: UP_DOWN_VOTE_SCORE, post})
+                dispatch(hideLoading())
+            })
     }
 }
 
-export function decrementVoteScore(postId) {
-    return {
-        type: DECREMENT_VOTE_SCORE,
-        postId
-    }
-}
-
-export function handleReceivePosts(){
+export function handleReceivePosts() {
     return (dispatch) => {
         dispatch(showLoading());
         return ServiceAPI.getPosts(posts => {
@@ -44,9 +40,20 @@ export function handleAddNewPost(post, callback) {
         return ServiceAPI.savePost(post)
             .then(response => response.json())
             .then(data => {
-                dispatch({type: ADD_NEW_POST, post: data})
+                dispatch({ type: ADD_NEW_POST, post: data })
                 dispatch(hideLoading())
                 callback()
             })
+    }
+}
+
+export const handleDeletePost = (postId) => {
+    return dispatch => {
+        dispatch(showLoading());
+        ServiceAPI.deletePost(postId).then(() => {
+            dispatch({ type: DELETE_POST, postId })
+            dispatch(hideLoading())
+        })
+
     }
 }

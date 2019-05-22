@@ -1,4 +1,4 @@
-import { RECEIVE_POSTS, INCREMENT_VOTE_SCORE, DECREMENT_VOTE_SCORE, ADD_NEW_POST } from "../actions/posts";
+import { RECEIVE_POSTS, INCREMENT_VOTE_SCORE, DECREMENT_VOTE_SCORE, ADD_NEW_POST, DELETE_POST, UP_DOWN_VOTE_SCORE } from "../actions/posts";
 
 export default function posts(state = {}, action) {
     switch (action.type) {
@@ -14,21 +14,16 @@ export default function posts(state = {}, action) {
                 [action.post.id]: {
                     ...action.post
                 }
-            }     
-        case INCREMENT_VOTE_SCORE:
-        return {
-            ...state,
-            [action.postId] : {
-                ...state[action.postId],
-                voteScore: state[action.postId].voteScore + 1
             }
-        }
-        case DECREMENT_VOTE_SCORE:
+        case DELETE_POST: 
+            delete state[action.postId]
+            return state
+        case UP_DOWN_VOTE_SCORE:
         return {
             ...state,
-            [action.postId] : {
-                ...state[action.postId],
-                voteScore: state[action.postId].voteScore - 1
+            [action.post.id] : {
+                ...action.post,
+                voteScore: action.post.voteScore
             }
         }
         default:
