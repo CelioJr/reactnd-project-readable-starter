@@ -10,7 +10,7 @@ import IconButton from '@material-ui/core/IconButton'
 import CommentIcon from '@material-ui/icons/CommentOutlined';
 import { handleDeletePost } from '../../actions/posts'
 
-import { incrementVoteScore, decrementVoteScore, UpDownVoteScore} from '../../actions/posts'
+import { UpDownVoteScore} from '../../actions/posts'
 
 const styles = {
   labelIcon: {
@@ -77,7 +77,12 @@ class CardPost extends Component {
           </div>
         </CardContent>
         <CardActions style={styles.cardAction}>
-          <Button size='small' color='primary' target='_blank'>
+          <Button 
+            size='small' 
+            color='primary' 
+            target='_blank'
+            onClick={() => this.props.history.push(`post/edit/${post.id}`)}
+            >
             Edit
           </Button>
           <Button 

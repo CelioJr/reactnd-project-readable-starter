@@ -9,9 +9,6 @@ import InputLabel from '@material-ui/core/InputLabel';
 import Button from '@material-ui/core/Button'
 import { NavLink } from 'react-router-dom'
 
-import { handleAddNewPost } from '../../actions/posts'
-
-
 const styles = {
   container: {
     display: 'flex',
@@ -35,40 +32,27 @@ const styles = {
   },
 };
 
-function guid() {
-  var s = [];
-  var hexDigits = "0123456789abcdef";
-  for (var i = 0; i < 36; i++) {
-      s[i] = hexDigits.substr(Math.floor(Math.random() * 0x10), 1);
-  }
-  s[14] = "4";  // bits 12-15 of the time_hi_and_version field to 0010
-  s[19] = hexDigits.substr((s[19] & 0x3) | 0x8, 1);  // bits 6-7 of the clock_seq_hi_and_reserved to 01
-  s[8] = s[13] = s[18] = s[23] = "-";
-
-  var uuid = s.join("");
-  return uuid;
-}
-class NewPost extends Component {
+class FormPost extends Component {
 
   state = {
     category: ''
   }
 
-  submitNewPost = (e) => {
-    e.preventDefault()
+  componentDidMount() {
+    const { edit, post } = this.props
 
-    const { title, author, body, category } = this.state
-
-    const post = {
-      id: guid(),
-      timestamp: Date.now(),
-      title,
-      author,
-      body,
-      category
+    if (edit) {
+      if (post !== undefined) {
+        this.setState({
+          id: post.id,
+          timestamp: post.timestamp,
+          title: post.title,
+          author: post.author,
+          body: post.body,
+          category: post.category
+        })
+      }
     }
-
-    this.props.handleAddNewPost(post, () => this.props.history.push('/'))
   }
 
   handleChange = name => event => {
@@ -77,7 +61,7 @@ class NewPost extends Component {
 
   render() {
 
-    const { categories } = this.props;
+    const { categories, title } = this.props;
 
     return (
       <div style={{ flexGrow: 1 }}>
@@ -91,11 +75,11 @@ class NewPost extends Component {
             container
             xs={12}
           >
-            <Paper style={styles.paper} onSubmit={this.submitNewPost}>
-              <form style={styles.container}>
+            <Paper style={styles.paper} onSubmit={this.props.onSubmit}>
+              <form noValidate style={styles.container}>
                 <Grid item container spacing={16}>
                   <Grid item xs={12}>
-                    <h3>Add a new Post</h3>
+                    <h3>{title}</h3>
                   </Grid>
                   <Grid item xs={12}>
                     <TextField
@@ -103,7 +87,7 @@ class NewPost extends Component {
                       id="title"
                       label="Title"
                       style={styles.textField}
-                      // value={this.state.name}
+                      value={this.state.title}
                       onChange={this.handleChange('title')}
                       margin="normal"
                       fullWidth
@@ -115,7 +99,7 @@ class NewPost extends Component {
                       id="author"
                       label="Author"
                       style={styles.textField}
-                      // value={this.state.name}
+                      value={this.state.author}
                       onChange={this.handleChange('author')}
                       margin="normal"
                       fullWidth
@@ -143,7 +127,7 @@ class NewPost extends Component {
                       id="body"
                       label="Message"
                       style={styles.textField}
-                      // value={this.state.name}
+                      value={this.state.body}
                       onChange={this.handleChange('body')}
                       margin="normal"
                       multiline
@@ -156,14 +140,14 @@ class NewPost extends Component {
                     direction="row"
                   >
                     <Grid item xs={2}>
-                        <Button type='submit' variant="contained" color="primary">
-                          Send
+                      <Button type='submit' variant="contained" color="primary">
+                        Send
                         </Button>
                     </Grid>
                     <Grid item xs={2}>
                       <NavLink
                         to={'/'}
-                        style={{textDecoration: 'none'}}
+                        style={{ textDecoration: 'none' }}
                       >
                         <Button variant="contained" color="secondary">
                           Cancel
@@ -182,10 +166,10 @@ class NewPost extends Component {
   }
 }
 
-function mapsStatetoProps({ categories }, props) {
+function mapsStatetoProps({ categories }) {
   return {
     categories,
   }
 }
 
-export default connect(mapsStatetoProps, { handleAddNewPost })(NewPost)
+export default connect(mapsStatetoProps)(FormPost)

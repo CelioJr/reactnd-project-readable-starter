@@ -1,4 +1,4 @@
-import { RECEIVE_POSTS, INCREMENT_VOTE_SCORE, DECREMENT_VOTE_SCORE, ADD_NEW_POST, DELETE_POST, UP_DOWN_VOTE_SCORE } from "../actions/posts";
+import { RECEIVE_POSTS, ADD_NEW_POST, DELETE_POST, UP_DOWN_VOTE_SCORE } from "../actions/posts";
 
 export default function posts(state = {}, action) {
     switch (action.type) {
