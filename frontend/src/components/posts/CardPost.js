@@ -9,8 +9,11 @@ import ThumbDownIcon  from '@material-ui/icons/ThumbDownAltOutlined'
 import IconButton from '@material-ui/core/IconButton'
 import CommentIcon from '@material-ui/icons/CommentOutlined';
 import { handleDeletePost } from '../../actions/posts'
+import { Link } from 'react-router-dom'
 
 import { UpDownVoteScore} from '../../actions/posts'
+import { formatDate } from '../../utils/utils'
+
 
 const styles = {
   labelIcon: {
@@ -28,23 +31,27 @@ const styles = {
 }
 class CardPost extends Component {
 
-  formatDate (timestamp) {
-		const d = new Date(timestamp)
-		const time = d.toLocaleTimeString('en-US')
-		return time.substr(0, 5) + time.slice(-2) + ' | ' + d.toLocaleDateString()
+  triggerDelete = (postId) => {
+    this.props.handleDeletePost(postId, () => this.props.history.push('/'))
   }
-  
+
   render() {
     const { post } = this.props
 
+    if(post === undefined){
+      return <div>Loading</div>
+    }
+    
     return (
       <Card>
         <CardContent>
-          <Typography gutterBottom variant="headline" component="h6">
-            {post.title}
-          </Typography>
+          <Link to={`/${post.category}/${post.id}`}>
+            <Typography gutterBottom variant="headline" component="h6">
+              {post.title}
+            </Typography>
+          </Link>
           <Typography variant="subtitle2" style={styles.labelIcon} component="p">
-            {this.formatDate(post.timestamp)}
+            {formatDate(post.timestamp)}
           </Typography>
           <Typography variant="subtitle2" style={styles.labelIcon} component="p">
               <AccountCicleIcon/>{`author: ${post.author}`}
@@ -77,19 +84,20 @@ class CardPost extends Component {
           </div>
         </CardContent>
         <CardActions style={styles.cardAction}>
+          <Link to={`/post/edit/${post.id}`}>
+            <Button 
+              size='small' 
+              color='primary' 
+              target='_blank'
+              >
+              Edit
+            </Button>
+          </Link>
           <Button 
             size='small' 
             color='primary' 
             target='_blank'
-            onClick={() => this.props.history.push(`post/edit/${post.id}`)}
-            >
-            Edit
-          </Button>
-          <Button 
-            size='small' 
-            color='primary' 
-            target='_blank'
-            onClick={() => this.props.handleDeletePost(post.id)}
+            onClick={() => this.triggerDelete(post.id)}
             >
            Delete
           </Button>
@@ -108,7 +116,7 @@ function mapStateToProps({posts},{id}){
 function mapDispatchToProps(dispatch) {
   return {
     UpDownVoteScore: (postId, option) => dispatch(UpDownVoteScore(postId, option)),
-    handleDeletePost: (postId) => dispatch(handleDeletePost(postId))
+    handleDeletePost: (postId, callback) => dispatch(handleDeletePost(postId, callback))
   }
 }
 

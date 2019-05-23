@@ -59,3 +59,17 @@ export const deletePost = (postId) => {
     })
       .then(res => res.json())
   }
+
+  export const getComments = (postId) => {
+    return fetch(`${api}/posts/${postId}/comments`, { headers })
+      .then(res => res.json())  
+  }
+
+  export const voteComment = (commentId, option) => {
+    return fetch(`${api}/comments/${commentId}`, {
+      method: 'POST',
+      headers: headers,
+      body: JSON.stringify({ option })
+    })
+      .then(res => res.json())
+  }

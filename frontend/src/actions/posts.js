@@ -48,12 +48,16 @@ export function handleAddNewPost(post, callback) {
     }
 }
 
-export const handleDeletePost = (postId) => {
+export function handleDeletePost(postId, callback){
+    console.log(typeof callback)
+    console.log(callback)
     return dispatch => {
         dispatch(showLoading());
-        ServiceAPI.deletePost(postId).then(() => {
+        ServiceAPI.deletePost(postId)
+            .then(() => {
             dispatch({ type: DELETE_POST, postId })
             dispatch(hideLoading())
+            callback()
         })
 
     }
@@ -70,3 +74,4 @@ export const handleUpdatePost = (postId, title, body, callback) => {
             })
     }
 } 
+

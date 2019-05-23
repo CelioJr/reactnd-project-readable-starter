@@ -56,8 +56,6 @@ function mapsStateToProps({ posts, shared }, {match}) {
 	const { category } = match.params
 	const { filter } = shared
 
-	console.log('filter', filter);
-
 	return {
 		postsIds: 
 					Object.keys(posts)

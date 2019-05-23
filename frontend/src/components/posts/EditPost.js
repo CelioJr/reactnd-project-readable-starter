@@ -47,7 +47,9 @@ class EditPost extends Component {
 
     const { post } = this.props
 
-    if (post !== undefined) {
+    if (post === undefined) {
+      return <div>Loading</div>
+    }
 
       return (
         <Paper style={styles.paper} onSubmit={this.handleSubmit}>
@@ -97,9 +99,6 @@ class EditPost extends Component {
         </Paper>
       )
     }
-
-    return <div>Loading</div>
-  }
 }
 
 
