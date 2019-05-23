@@ -6,7 +6,7 @@ import ThumbDownIcon from '@material-ui/icons/ThumbDownAltOutlined'
 import IconButton from '@material-ui/core/IconButton'
 import { Link } from 'react-router-dom'
 
-import { voteComment } from '../../actions/comments'
+import { voteComment, deleteComment } from '../../actions/comments'
 
 const styles = {
   labelIcon: {
@@ -57,7 +57,7 @@ class CommentItem extends Component {
           </Grid>
           <Grid item container spacing={8} direction="row">
             <Grid item style={{ margin: '2%' }} >
-              <Link to='/'>
+              <Link to={`/post/${comment.parentId}/comment/${comment.id}/edit`}>
                 <Button
                   size='small'
                   color='primary'
@@ -72,7 +72,7 @@ class CommentItem extends Component {
                 size='small'
                 color='primary'
                 target='_blank'
-                // onClick={() => this.props.handleDeletePost(post.id)}
+                onClick={() => this.props.deleteComment(comment.id, comment.parentId)}
               >
                 Delete
           </Button>
@@ -84,4 +84,4 @@ class CommentItem extends Component {
   }
 }
 
-export default connect(null, { voteComment })(CommentItem)
+export default connect(null, { voteComment, deleteComment })(CommentItem)
