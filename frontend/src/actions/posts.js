@@ -5,6 +5,7 @@ export const RECEIVE_POSTS = 'RECEIVE_POSTS'
 export const ADD_NEW_POST = 'ADD_NEW_POST'
 export const DELETE_POST = 'DELETE_POST'
 export const UP_DOWN_VOTE_SCORE = 'UP_DOWN_VOTE_SCORE'
+export const UPDATE_POST = 'UPDATE_POST'
 
 export function receivePost(posts) {
     return {
@@ -57,3 +58,15 @@ export const handleDeletePost = (postId) => {
 
     }
 }
+
+export const handleUpdatePost = (postId, title, body, callback) => {
+    return dispatch => {
+        dispatch(showLoading())
+        ServiceAPI.updatePost(postId, title, body)
+            .then((updatePost) => {
+                dispatch({type: UPDATE_POST, postId, updatePost})
+                dispatch(hideLoading())
+                callback()
+            })
+    }
+} 

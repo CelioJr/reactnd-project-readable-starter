@@ -1,4 +1,4 @@
-import { RECEIVE_POSTS, ADD_NEW_POST, DELETE_POST, UP_DOWN_VOTE_SCORE } from "../actions/posts";
+import { RECEIVE_POSTS, ADD_NEW_POST, DELETE_POST, UP_DOWN_VOTE_SCORE, UPDATE_POST } from "../actions/posts";
 
 export default function posts(state = {}, action) {
     switch (action.type) {
@@ -26,6 +26,16 @@ export default function posts(state = {}, action) {
                 voteScore: action.post.voteScore
             }
         }
+        case UPDATE_POST:
+            console.log('state', state)
+            console.log('action', action)
+            // const updatePost = state[action.postId]
+            return {
+                ...state,
+                [action.postId]: {
+                    ...action.updatePost
+                }
+            }
         default:
             return state
     }

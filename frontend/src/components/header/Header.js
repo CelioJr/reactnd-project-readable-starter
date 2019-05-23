@@ -1,7 +1,7 @@
 import React from 'react'
 import Button from '@material-ui/core/Button'
 import Grid from '@material-ui/core/Grid'
-import { NavLink } from 'react-router-dom'
+import { Link } from 'react-router-dom'
 import logo from '../../resources/logo.png'
 import './Header.css'
 
@@ -14,21 +14,22 @@ const Header = () => {
         alignItems="center"
       >
         <Grid item xs={10} >
-          <NavLink
+          <Link
             to={'/'}
           >
             <img src={logo} alt="trillo logo" className="logo"></img>
             <span>READABLE</span>
-          </NavLink>
+          </Link>
         </Grid>
         <Grid item>
-          <NavLink
+          <Link
             to={'/new'}
+            style={{textDecoration: 'none'}}
           >
             <Button variant="contained" color="primary">
               New Post
             </Button>
-          </NavLink>
+          </Link>
         </Grid>
       </Grid>
     </header>

@@ -50,3 +50,12 @@ export const deletePost = (postId) => {
       body: JSON.stringify({ option })
     }).then(res => res.json())
   }
+
+  export const updatePost = (postId, title, body) => {
+    return fetch(`${api}/posts/${postId}`, {
+      method: 'PUT',
+      headers: headers,
+      body: JSON.stringify({ title: title, body: body })
+    })
+      .then(res => res.json())
+  }
