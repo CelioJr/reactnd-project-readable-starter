@@ -17,11 +17,16 @@ class Details extends Component {
   render() {
 
     const { postId } = this.props.match.params
-    const { comments } = this.props
+    const { comments, notFound } = this.props
 
+    if(notFound === true){
+      return <h1 style={{margin: '10%'}}>POST NOT FOUND</h1>
+    }
     if (comments === undefined) {
       return <div>Loading</div>
     }
+
+    
 
     return (
       <Grid item container spacing={16} style={{ marginLeft: '6%', marginTop: '2%', marginBottom: '5%' }}>
@@ -36,22 +41,14 @@ class Details extends Component {
   }
 }
 
-function mapsStatetoProps({ comments }, { match }) {
+function mapsStatetoProps({ comments, posts }, { match }) {
 
   const { postId } = match.params
-
-  console.log({comments})
-
-  const filterComments = Object.entries(comments).length > 0 && comments.constructor === Object
-    ? comments[postId].map(comment => {
-      if(comment.deleted === false){
-        return comment
-      }
-    })
-    :[]
+  const notFound = posts[postId] === undefined ? true : false
 
   return {
-    comments: filterComments
+    comments: comments[postId],
+    notFound
   }
 }
 export default connect(mapsStatetoProps, { receiveComments, UpDownVoteScore })(Details)
