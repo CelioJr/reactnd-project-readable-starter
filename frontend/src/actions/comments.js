@@ -4,6 +4,7 @@ import * as ServiceAPI from '../services/ServiceAPI'
 export const RECEIVE_COMMENTS = 'RECEIVE_COMMENTS'
 export const VOTE_COMMENT = 'VOTE_COMMENT'
 export const UPDATE_COMMENT = 'UPDATE_COMMENT'
+export const ADD_COMMENT = 'ADD_COMMENT'
 
 export const receiveComments = (postId) => {
   return dispatch => {
@@ -48,5 +49,17 @@ export const handleUpdateComment = (commentId, postId, timestamp, body, callback
         dispatch(hideLoading())
         callback()
       })
+  }
+}
+
+export const addComment = (comment, postId, callback) => {
+  return (dispatch) => {
+    dispatch(showLoading())
+    ServiceAPI.addComment(comment).then(comment => {
+      // dispatch({ type: ADD_COMMENT, postId, comment })
+      dispatch(receiveComments(postId))
+      dispatch(hideLoading())
+      callback()
+    })
   }
 }

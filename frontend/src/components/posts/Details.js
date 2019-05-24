@@ -24,12 +24,12 @@ class Details extends Component {
     }
 
     return (
-      <Grid item container spacing={16} style={{ marginLeft: '6%', marginTop: '2%' }}>
+      <Grid item container spacing={16} style={{ marginLeft: '6%', marginTop: '2%', marginBottom: '5%' }}>
         <Grid item xs={10}>
           <CardPost id={postId} />
         </Grid>
         <Grid container item xs={10}>
-          <Comments comments={comments} />
+          <Comments comments={comments} postId={postId} />
         </Grid>
       </Grid>
     )
@@ -40,8 +40,18 @@ function mapsStatetoProps({ comments }, { match }) {
 
   const { postId } = match.params
 
+  console.log({comments})
+
+  const filterComments = Object.entries(comments).length > 0 && comments.constructor === Object
+    ? comments[postId].map(comment => {
+      if(comment.deleted === false){
+        return comment
+      }
+    })
+    :[]
+
   return {
-    comments: comments[postId]
+    comments: filterComments
   }
 }
 export default connect(mapsStatetoProps, { receiveComments, UpDownVoteScore })(Details)

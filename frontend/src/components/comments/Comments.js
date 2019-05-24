@@ -1,10 +1,13 @@
 import React, { Component } from 'react'
 import { Grid } from '@material-ui/core';
 import CommentItem from './CommentItem';
+import FormComment from './FormComment';
 
 export default class Comments extends Component {
   render() {
-    const { comments } = this.props
+    const { comments, postId } = this.props
+
+    console.log({comments})
 
     if (comments === undefined) {
       return <div>Loading</div>
@@ -12,8 +15,12 @@ export default class Comments extends Component {
 
     return (
       <Grid container item xs={10}>
+        <Grid item xs={12}>
+          <FormComment postId={postId}/>
+        </Grid>
         {comments.map(comment => {
-          if(comment.deleted === false) {return <CommentItem key={comment.id} comment={comment} />}
+          // if(comment.deleted === false) {return }
+          return <CommentItem key={comment.id} comment={comment} />
         }
         )}
       </Grid>

@@ -27,6 +27,7 @@ class CommentItem extends Component {
   render() {
     const { comment } = this.props
 
+    console.log('-->', comment)
     return (
       <Grid key={comment.id} item xs={12} style={{ marginTop: '2%' }}>
         <Paper style={{ paddingLeft: '2%' }} >

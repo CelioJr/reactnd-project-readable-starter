@@ -1,4 +1,4 @@
-import { RECEIVE_COMMENTS, VOTE_COMMENT, UPDATE_COMMENT } from "../actions/comments";
+import { RECEIVE_COMMENTS, VOTE_COMMENT, UPDATE_COMMENT, ADD_COMMENT } from "../actions/comments";
 
 export default function comments(state = {}, action) {
   switch (action.type) {
@@ -14,6 +14,8 @@ export default function comments(state = {}, action) {
               return comment
             })
           }
+          case ADD_COMMENT:
+             return Object.assign({}, state, {[action.postId]: action.comment})
           case UPDATE_COMMENT:
           return {
             ...state,
