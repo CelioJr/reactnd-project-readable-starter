@@ -35,6 +35,7 @@ export const deleteComment = (commentId, postId) => {
     dispatch(showLoading())
     ServiceAPI.deleteComment(commentId)
       .then(() => {
+        dispatch(receivePostId(postId))
         dispatch(receiveComments(postId))
         dispatch(hideLoading())
       })
