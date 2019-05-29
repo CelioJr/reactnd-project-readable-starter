@@ -16,8 +16,12 @@ export default function posts(state = {}, action) {
                 }
             }
         case DELETE_POST: 
-            delete state[action.postId]
-            return state
+            return Object.keys(state).reduce((obj, p) => {
+                if(action.postId !== p){
+                    obj[p] = state[p]
+                }
+                return obj
+            }, {})
         case UP_DOWN_VOTE_SCORE:
         return {
             ...state,
@@ -27,9 +31,6 @@ export default function posts(state = {}, action) {
             }
         }
         case UPDATE_POST:
-            console.log('state', state)
-            console.log('action', action)
-            // const updatePost = state[action.postId]
             return {
                 ...state,
                 [action.postId]: {

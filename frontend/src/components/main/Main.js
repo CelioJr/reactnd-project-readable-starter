@@ -7,6 +7,11 @@ import EditPost from '../posts/EditPost';
 import Details from '../posts/Details';
 import EditComment from '../comments/EditComment';
 
+const NoMatch = ({ location }) => (
+  <div>
+    <h3>No match for <code>{location.pathname}</code></h3>
+  </div>
+)
 class Main extends Component {
   render() {
 
@@ -19,6 +24,7 @@ class Main extends Component {
         <Route path='/:category/:postId' component={Details} />
         <Route path='/:category' component={Posts} />
         <Route path='/' component={Posts} />
+        <Route component={NoMatch} />
       </Switch>
        
       </div>

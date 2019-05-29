@@ -51,7 +51,6 @@ class EditComment extends Component {
 
   render() {
     const { comment } = this.props
-    console.log(this.props.comment)
     return (
       <div style={{ flexGrow: 1 }}>
         <Grid
