@@ -99,3 +99,9 @@ export const addComment = (comment) => {
   })
     .then(res => res.json())
 }
+
+export const getPostId = async (postId) => {
+  let response = await fetch(`${api}/posts/${postId}`, { headers })
+  let post = response.json()
+  return post
+}

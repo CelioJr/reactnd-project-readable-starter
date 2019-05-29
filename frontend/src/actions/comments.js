@@ -1,5 +1,6 @@
 import { showLoading, hideLoading } from "react-redux-loading"
 import * as ServiceAPI from '../services/ServiceAPI'
+import { receivePostId } from "./posts";
 
 export const RECEIVE_COMMENTS = 'RECEIVE_COMMENTS'
 export const VOTE_COMMENT = 'VOTE_COMMENT'
@@ -57,6 +58,7 @@ export const addComment = (comment, postId, callback) => {
     dispatch(showLoading())
     ServiceAPI.addComment(comment).then(comment => {
       // dispatch({ type: ADD_COMMENT, postId, comment })
+      dispatch(receivePostId(postId))
       dispatch(receiveComments(postId))
       dispatch(hideLoading())
       callback()

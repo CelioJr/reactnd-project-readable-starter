@@ -7,8 +7,6 @@ export default class Comments extends Component {
   render() {
     const { comments, postId } = this.props
 
-    console.log({comments})
-
     if (comments === undefined) {
       return <div>Loading</div>
     }
