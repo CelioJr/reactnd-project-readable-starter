@@ -2,8 +2,6 @@
 
 This is  project for the final assessment project for Udacity's Redux course where was will build a content and comment web app. Users will be able to post content to predefined categories, comment on their posts and other users' posts, and vote on posts and comments. Users are be able to edit and delete posts and comments.
 
-This repository includes the code for the backend API Server that you'll use to develop and interact with the front-end portion of the project.
-
 ## Server Start
 
 To get started developing right away:
