@@ -18,7 +18,7 @@ To get started developing right away:
 Information about the API server and how to use it can be found in its [README file](api-server/README.md).
 
 
-##FrontEnd 
+## FrontEnd 
 
 * install dependencies:
     - `cd frontend`
